@@ -3,15 +3,15 @@ package coche;
 import java.util.Scanner;
 
 public class Coche {
-	
+
 	private String nombrePiloto;
 	private int dorsal;
 	private double distanciaCarrera;
 	private String estado;
-	private int potencia;
+	private double potencia;
 	private double velocidad;
 	private double kmRecorridos;
-	
+
 	public Coche(String nombrePiloto, int dorsal, double distanciaCarrera) {
 		this.nombrePiloto = nombrePiloto;
 		this.dorsal = dorsal;
@@ -21,31 +21,44 @@ public class Coche {
 		this.velocidad = 0;
 		this.kmRecorridos = 0;
 	}
-	
+
 	public void arrancar() {
-		Scanner leer = new Scanner(System.in);
-		int numero =0;
-		System.out.println("Pulsa el 1 para arrancar el coche");
-		numero = leer.nextInt();
-		if(numero==1) {
-			estado="marcha";
-			System.out.println("El coche esta arrancado");
+		estado = "marcha";
+		System.out.println("El coche esta arrancado");
+	}
+
+	public void acelerar() {
+		double aceleron;
+		
+		aceleron = Math.random() * potencia;
+		velocidad += aceleron;
+		if (velocidad > 200) {
+			estado = "accidentado";
+			System.out.println("Has estrellado tu coche");
+			velocidad=0;
 		} else {
-			estado="parado";
-			
+			kmRecorridos += aceleron;
 		}
 	}
-	
-	public void acelerar() {
-		
-	}
-	
+
+
 	public void frenar() {
+		double frenazo;
+		
+		frenazo = Math.random() * potencia;
+		velocidad -= frenazo;
+		if(velocidad<0) {
+			velocidad =0;
+		}
+		kmRecorridos += frenazo;
 		
 	}
-	
+
 	public void rearrancar() {
-		
+		if(estado == "accidentado") {
+			System.out.println("Puedes rearrancar");
+			estado = "marcha";
+		}
 	}
 
 	public int getDorsal() {
@@ -72,7 +85,7 @@ public class Coche {
 		this.estado = estado;
 	}
 
-	public int getPotencia() {
+	public double getPotencia() {
 		return potencia;
 	}
 
@@ -98,11 +111,8 @@ public class Coche {
 
 	@Override
 	public String toString() {
-		return "Coche " + nombrePiloto + " - " + dorsal + " - " + distanciaCarrera
-				+ " - " + estado + " - " + potencia + " - " + velocidad + " - "
-				+ kmRecorridos;
+		return "Coche " + nombrePiloto + " - " + dorsal + " - " + distanciaCarrera + " - " + estado + " - " + potencia
+				+ " - " + velocidad + " - " + kmRecorridos;
 	}
-	
-	
-	
+
 }
