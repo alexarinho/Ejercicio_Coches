@@ -15,7 +15,8 @@ public class Principal {
 
 	public static void main(String[] args) {
 		Scanner leer = new Scanner(System.in);
-		int opc=0;
+		int opc=0; 
+			
 		boolean condicion = true;
 		Menu menu = new Menu();
 		
