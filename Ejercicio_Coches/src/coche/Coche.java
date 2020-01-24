@@ -11,8 +11,9 @@ public class Coche {
 	private double potencia;
 	private double velocidad;
 	private double kmRecorridos;
+	private boolean bot;
 
-	public Coche(String nombrePiloto, int dorsal, double distanciaCarrera) {
+	public Coche(String nombrePiloto, int dorsal, double distanciaCarrera, boolean bot) {
 		this.nombrePiloto = nombrePiloto;
 		this.dorsal = dorsal;
 		this.distanciaCarrera = distanciaCarrera;
@@ -20,44 +21,55 @@ public class Coche {
 		this.potencia = 50;
 		this.velocidad = 0;
 		this.kmRecorridos = 0;
+		this.bot = false;
 	}
 
 	public void arrancar() {
 		estado = "marcha";
 		System.out.println("El coche esta arrancado");
 	}
-
+	
 	public void acelerar() {
 		double aceleron;
-		
-		aceleron = Math.random() * potencia;
-		velocidad += aceleron;
-		if (velocidad > 200) {
-			estado = "accidentado";
-			System.out.println("Has estrellado tu coche");
-			velocidad=0;
+		if(estado.equalsIgnoreCase("marcha")) {
+			if (!estado.equalsIgnoreCase("accidentado")) {
+				aceleron = Math.random() * potencia;
+				velocidad += aceleron;
+				if (velocidad > 200) {
+					estado = "accidentado";
+					System.out.println("Has estrellado tu coche");
+					velocidad=0;
+				} else {
+					kmRecorridos += aceleron;
+				}
+			}
 		} else {
-			kmRecorridos += aceleron;
+			System.out.println("El coche esta parado");
 		}
+		
 	}
-
 
 	public void frenar() {
 		double frenazo;
 		
-		frenazo = Math.random() * potencia;
-		velocidad -= frenazo;
-		if(velocidad<0) {
-			velocidad =0;
+		if(estado.equalsIgnoreCase("marcha")) {
+			if(!estado.equalsIgnoreCase("accidentado")) {
+				frenazo = Math.random() * potencia;
+				velocidad -= frenazo;
+				if(velocidad<0) {
+					velocidad =0;
+				}
+				kmRecorridos += frenazo;
+			}
 		}
-		kmRecorridos += frenazo;
-		
 	}
 
 	public void rearrancar() {
 		if(estado == "accidentado") {
 			System.out.println("Puedes rearrancar");
 			estado = "marcha";
+		} else {
+			System.out.println("No es necesaria esta accion ahora");
 		}
 	}
 
